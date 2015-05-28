@@ -1,0 +1,25 @@
+services:
+    sl.order.admin.controller:
+        class: Sunsetlabs\OrderBundle\Controller\OrderAdminController
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@templating"
+            - "@form.factory"
+            - "@router"
+            - "@sl.order.manager"
+            - "@sl.stock.manager"
+    sunsetlabs_order.form.type.order:
+        class: Sunsetlabs\OrderBundle\Form\Type\OrderType
+        arguments:
+            - "%sl.order.class%"
+        tags:
+            - { name: form.type, alias: order_type }
+    sunsetlabs_order.form.type.order_item:
+        class: Sunsetlabs\OrderBundle\Form\Type\OrderItemType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@sl.stock.manager"
+            - "%sl.order.item.class%"
+            - "%sl.product.class%"
+        tags:
+            - { name: form.type, alias: order_item_type }

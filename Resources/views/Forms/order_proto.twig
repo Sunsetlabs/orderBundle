@@ -1,0 +1,35 @@
+{% set product = (order_item.product is null) ? null:order_item.product.vars.data %}
+{% set subtotal = (product is null) ? '-':(product.get('price') * order_item.quantity.vars.data) %}
+
+<tr class="order-row"> 
+	<td class="col-xs-3 {{ order_item.product.vars.valid ? '':'has-error' }}">{{ form_widget(order_item.product, { 'attr' : { 'placeholder' : 'Producto', 'class' : 'form-control' } } ) }}</td>
+	{% for field in fields %}
+	<td class="{{ field.class ? field.class:'' }}">
+		{% if field.input_icon %}
+			<div class="input-group">
+				<span class="input-group-addon">{{ field.input_icon }}</span>
+		{% endif %}
+		<div class="form-control order-{{field.property}}" data-value="{{ (product is null) ? '-':product.get(field.property) }}"> {{ (product is null) ? '-':product.get(field.property) }}</div>
+		{% if field.input_icon %}
+			</div>
+		{% endif %}
+	</td>
+	{% endfor %}
+	<td class="{{ order_item.quantity.vars.valid ? '':'has-error' }}">
+		{{ form_widget(order_item.quantity, { 'attr' : { 'placeholder' : 'Cantidad', 'class' : 'form-control order-quantity', 'data-value' : order_item.quantity.vars.data } } ) }}
+		{% for error in order_item.quantity.vars.errors %}
+			{% if error.cause == 'stock' %}
+				<span class="text-danger text-center">{{ error.message }}</span>
+			{% endif %}
+		{% endfor %}
+	</td>
+	<td class="col-xs-2">
+		<div class="input-group">
+		  <span class="input-group-addon">$</span>
+		  <div class="order-subtotal form-control"> {{ subtotal }} </div>
+		</div>
+	</td>
+	<td>
+		<a href="#" tabindex="-1" class="order-remove-item btn btn-danger btn-xs">Quitar</a>
+	</td>
+</tr>

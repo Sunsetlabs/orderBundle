@@ -1,0 +1,23 @@
+{
+    "name": "sunsetlabs/order-bundle",
+    "type": "symfony-bundle",
+    "description": "Order functionality for Symfony2 applications",
+    "keywords": ["order", "ecommerce"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alejo Rodriguez",
+            "email": "a.rodsott@gmail.com"
+        },
+        {
+            "name": "Sunsetlabs",
+            "homepage": "http://sunsetlabs.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Sunsetlabs\\OrderBundle\\": "" }
+    },
+    "branch-alias" : {
+        "dev-master" : "master"
+    }
+}

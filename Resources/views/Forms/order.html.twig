@@ -1,0 +1,66 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% block head_stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('@SunsetlabsOrder/css/backend/order.css') }}">
+{% endblock head_stylesheets %}
+
+{% block content %}
+    <div class="row">
+        <div id="content-header" class="col-sm-12">
+            {% block content_header %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1 class="title">{% block content_title %}{% endblock %}</h1>
+                    </div>
+                </div>
+            {% endblock content_header %}
+        </div>
+
+        <div id="main" class="col-sm-12">
+            <form method="POST" >
+            {% set extra_fields = [] %}
+            {% for field in fields %}
+                {% set extra_fields = extra_fields|merge([field.property]) %}
+            {% endfor %}
+            {{ form_row(form._token) }}
+            <table class="order table" data-prototype="{% filter escape %}{% include '@SunsetlabsOrder/Forms/order_proto.twig' with { 'order_item': form.items.vars.prototype } %}{% endfilter %}" data-url-info="{{ path('retrive_product_info') }}" data-extra-fields="{{ extra_fields|join(',') }}">
+                <tr>
+                    <th>Producto</th>
+                    {% for field in fields %}
+                        <th>{{ field.label }}</th>
+                    {% endfor %}
+                    <th>Cantidad</th>
+                    <th>SubTotal</th>
+                </tr>
+                {% for item in form.items %}
+                    {% include '@SunsetlabsOrder/Forms/order_proto.twig' with { 'order_item': item.children } %}
+                {% endfor %}
+                <tr class="order-last">
+                    <td><a href="#" class="order-add-item btn btn-xs">Agregar</a></td>
+                    {% for field in fields %}
+                        <td></td>
+                    {% endfor %}
+                    <th>Total:</th>
+                    <td>
+                        <div class="input-group">
+                          <span class="input-group-addon">$</span>
+                          <div class="order-total form-control"> - </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            {{ form_errors(form) }}
+            <input type="submit" value="submit"/>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block body_javascript %}
+    {{ parent() }}
+
+    {% include '@SunsetlabsEcommerceResourceBundle/Resources/views/js/autocompleter.twig' %}
+    <script type="text/javascript" src="{{ asset('bundles/sunsetlabsorder/js/orderAdmin.js') }}"></script>
+
+{% endblock %}

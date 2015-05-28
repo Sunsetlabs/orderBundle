@@ -1,0 +1,6 @@
+new_order:
+    path:     '/admin/order/new'
+    defaults: { _controller: sl.order.admin.controller:newAction }
+edit_order:
+    path:     '/admin/order/edit/{id}'
+    defaults: { _controller: sl.order.admin.controller:editAction }
