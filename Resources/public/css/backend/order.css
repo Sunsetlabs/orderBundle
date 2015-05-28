@@ -9,6 +9,9 @@ div.form-control {
 	background: #D44542;
 	color: white;
 }
+.has-error .label {
+	background: #D44542;
+}
 .input-group-addon {
     border-radius: 0;
     border: 1px solid #ccc;
