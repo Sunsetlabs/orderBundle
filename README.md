@@ -3,6 +3,17 @@
 #### via composer
 
 ````json
+{
+    "require": {
+        "sunsetlabs/order-bundle" : "dev-master"
+    },
+    "repositories" : [
+        {
+            "type" : "vcs",
+            "url"  : "https://github.com/Sunsetlabs/orderBundle.git"
+        }
+    ]
+}
 ````
 
 ### Configuracion
@@ -10,6 +21,12 @@
 Registrar en el kernel de la aplicacion
 
 ````php
+<?php
+// app/AppKernel.php
+
+$bundles = array(
+    new Sunsetlabs\OrderBundle\SunsetlabsOrderBundle()
+);
 ````
 
 El plugin provee dos clases Order y OrderItem la cuales pueden ser extendidas. La forma mas basica:
